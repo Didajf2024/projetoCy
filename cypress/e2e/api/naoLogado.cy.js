@@ -1,5 +1,8 @@
 describe('API - Profile', () => {
 
+    leturlPerfis = '/api/profile'
+
+    //DRY - Don'tRepeat Yourself
     context('todos os perfis', () => {
 
 
@@ -8,7 +11,7 @@ describe('API - Profile', () => {
             cy.log('Teste de texto')
             cy.request({
                 method: 'GET',
-                url: '/api/profile'
+                url: urlPerfis
             }).then(({ status, duration, body, headers}) =>{
                 expect(status).to.eq(200)
                 expect(duration).to.be.lessThan(10000)
@@ -26,9 +29,11 @@ describe('API - Profile', () => {
 
         it('seleciona um usuario invalido', () => {
 
+            let urlPerfil = '/api/profile/user/'
+
             cy.request({
                 method: 'GET',
-                url: '/api/profile/user/1',
+                url: `${urlPerfil}1`,
                 failOnStatusCode: false
             }).then(({status, body}) => {
                 expect(status).to.eq(404)
@@ -42,7 +47,7 @@ describe('API - Profile', () => {
 
             cy.request({
                 method: 'GET',
-                url: `/api/profile/user/${usuarioId}`
+                url: `${urlPerfil}/${usuarioId}`
             }).then(({status, body }) => {
                 expect(status).to.eq(200)
             })  
@@ -52,12 +57,12 @@ describe('API - Profile', () => {
 
             cy.request({
                 method: 'GET',
-                url: '/api/profile'  
+                url: urlPerfis
             }).then(({body }) => {
 
                 cy.request({
                     method: 'GET',
-                    url: `/api/profile/user/${body[1].user._id}`
+                    url: `${urlPerfil}/${body[1].user._id}`
                 }).then(({status, body}) =>{
                     expect(status).to.eq(200)
                     expect(body.status).to.eq('Outro')
