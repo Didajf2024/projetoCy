@@ -1,4 +1,5 @@
 import Ajv from 'ajv'
+import { definitionHelper } from '../utils/schemaDefinitions'
 
 Cypress.Commands.add('login', (email, senha) => {
 
@@ -16,7 +17,7 @@ Cypress.Commands.add('login', (email, senha) => {
     })
 })
 
-Cypress.Commands.add('testeContrato' , () => {
+Cypress.Commands.add('testeContrato' , (schema, resposta) => {
 
     //função que mostra os erros
     const getSchemaError = (ajvErros) => {
@@ -24,4 +25,17 @@ Cypress.Commands.add('testeContrato' , () => {
             `Campo: ${ajvErros[0]['instancePath']} é valido. Erro: ${ajvErros[0['message']]}`
         )
     }
+
+    // iniciar o AJV
+    const ajv = new Ajv()
+    const validacao = ajv.addSchema(definitionHeloer).compile(schema)
+    const valido = validate(resposta)
+
+    // verificação se o schema passou ou falhou
+    if (!valido) {
+        getSchemaError(validate.erros).then(schemaError => {
+            throw new Error(schemaError)
+        })
+    } else
+        expect(valido).to.be.true
 })

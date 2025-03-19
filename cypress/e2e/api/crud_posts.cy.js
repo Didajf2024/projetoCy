@@ -1,3 +1,6 @@
+import {testeContratoPOSTPost } from '../../fixtures/schema-POST-posts'
+import { testeContratoGETPosts } from '../../fixtures/schema-GET-posts'
+
 describe('CRUD - Posts', () => {
 
     let postId = ''
@@ -22,6 +25,8 @@ describe('CRUD - Posts', () => {
             expect(status).to.eq(201)
             expect(body.text).to.eq(mensagem)
             postId = body._id
+
+            cy.testeContrato(testeContratoPOSTPost, body)
         })
     })
 
@@ -35,6 +40,8 @@ describe('CRUD - Posts', () => {
             expect(status).to.eq(200)
             expect(body.text).to.eq(mensagem)
             expect(body.likes).to.have.lenghtOf(0)
+
+            cy.testeContrato(testeContratoGETPost, body)
         })
     })
 
