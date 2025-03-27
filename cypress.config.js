@@ -4,7 +4,7 @@ module.exports = defineConfig({
   e2e: {
     viewportHeight: 1080,
     viewportWidth: 1920,
-    baseUrl: 'https://conexaoqa.herokuapp.com',
+    baseUrl: 'https://localhost:3000',
 
       //
       setupNodeEvents(on, config) {

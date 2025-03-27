@@ -42,4 +42,5 @@ export const testContratoPOSTposts = {
             type: 'integer'
         }
     } 
+    
 }
